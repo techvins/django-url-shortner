@@ -1,0 +1,7 @@
+Django==3.2.7
+django-model-utils==2.6.1
+django-redis
+django-extensions
+gunicorn
+web-pdb
+ptvsd

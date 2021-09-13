@@ -1,0 +1,2 @@
+docker build -t techvins/pub_repo:dus_env . -f DockerfileEnv
+docker build -t techvins/pub_repo:dus_prod . -f Dockerfile
