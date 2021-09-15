@@ -4,7 +4,7 @@ from django.utils.crypto import get_random_string
 # Create your models here.
 class URLRedirect(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    url=models.CharField(max_length=255)
+    url=models.CharField(max_length=255,unique=True)
     short_url=models.CharField(max_length=255,db_index=True)
     hit_count=models.IntegerField(default=0)
 
@@ -13,6 +13,13 @@ class URLRedirect(models.Model):
         self.hit_count +=1
         self.save()
     
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if not self.short_url:
+            self.short_url=self.get_unique_key()
+            self.save()
+
 
     @classmethod
     def get_unique_key(cls):
