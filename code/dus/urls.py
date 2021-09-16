@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from redirector.views import OriginalUrlView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/redirector/', include('redirector.urls_v1')),
+    path('<str:unique_key>/', OriginalUrlView.as_view()),
+
 ]
