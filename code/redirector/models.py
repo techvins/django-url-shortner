@@ -1,13 +1,13 @@
 from django.db import models
 from django.utils.crypto import get_random_string
-
+from django.contrib.auth.models import User
 # Create your models here.
 class URLRedirect(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     url=models.CharField(max_length=255,unique=True)
     short_url=models.CharField(max_length=255,db_index=True)
     hit_count=models.IntegerField(default=0)
-
+    created_by = models.ForeignKey(User,null=True,on_delete=models.CASCADE) 
 
     def hit(self):
         self.hit_count +=1
