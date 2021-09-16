@@ -17,12 +17,15 @@ class CreateRedirectorView(generics.CreateAPIView):
         serializer.save(created_by=self.request.user)
 
     def create(self, request, *args, **kwargs):
+        url=request.data['url']
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=False)
-        url_redirect=URLRedirect.objects.filter(url=request.data['url'])
+        url_redirect=URLRedirect.objects.filter(url=url)
         if url_redirect.exists():
             short_url=url_redirect.last().short_url
-            return Response({'message':'already created','short_url':short_url}, status=status.HTTP_202_ACCEPTED)
+            return Response({'url':url,'short_url':short_url,'created':'false'}, status=status.HTTP_202_ACCEPTED)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        result= serializer.data
+        result['created']='true'
+        return Response(result, status=status.HTTP_201_CREATED, headers=headers)
