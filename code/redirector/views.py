@@ -4,8 +4,9 @@ from .models import URLRedirect
 from .serializers import URLRedirectSerializer
 from rest_framework.response import Response
 from rest_framework import status
-
-
+from rest_framework.views import APIView
+from django.http import HttpResponse, HttpResponseRedirect 
+from django.conf import Settings
 
 class CreateRedirectorView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -29,3 +30,17 @@ class CreateRedirectorView(generics.CreateAPIView):
         result= serializer.data
         result['created']='true'
         return Response(result, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class OriginalUrlView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes=[authentication.TokenAuthentication]
+
+    def get(self, request):
+        short_url = request.data.get('short_url')
+        if short_url:
+            original_url=URLRedirect.objects.get(short_url=short_url).url
+            return HttpResponseRedirect(redirect_to=original_url)
+        return Response({'message':'please enter short url'},status=status.HTTP_400_BAD_REQUEST)
+
+        
