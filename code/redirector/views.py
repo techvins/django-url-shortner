@@ -39,7 +39,9 @@ class OriginalUrlView(APIView):
 
     def get(self, request,unique_key):
         if unique_key:
-            original_url=URLRedirect.objects.get(short_url=unique_key).url
+            url_redirect=URLRedirect.objects.get(short_url=unique_key)
+            original_url=url_redirect.url
+            url_redirect.hit()
             return HttpResponseRedirect(redirect_to=original_url)
         return Response({'message':'please enter short url'},status=status.HTTP_400_BAD_REQUEST)
 
