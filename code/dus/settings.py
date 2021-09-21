@@ -75,6 +75,9 @@ WSGI_APPLICATION = 'dus.wsgi.application'
 
 BASE_URL =os.environ['BASE_URL']
 
+APPEND_SLASH=False
+
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
