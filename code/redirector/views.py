@@ -7,6 +7,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 from django.http import HttpResponse, HttpResponseRedirect 
 from django.conf import settings
+from django.shortcuts import get_object_or_404
+
 
 class CreateRedirectorView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -39,10 +41,9 @@ class OriginalUrlView(APIView):
 
     def get(self, request,unique_key):
         if unique_key:
-            url_redirect=URLRedirect.objects.get(short_url=unique_key)
-            original_url=url_redirect.url
+            url_redirect=get_object_or_404(URLRedirect,short_url=unique_key)
             url_redirect.hit()
-            return HttpResponseRedirect(redirect_to=original_url)
+            return HttpResponseRedirect(redirect_to=url_redirect.url)
         return Response({'message':'please enter short url'},status=status.HTTP_400_BAD_REQUEST)
 
         
