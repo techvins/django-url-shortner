@@ -20,6 +20,6 @@ from redirector.views import OriginalUrlView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/redirector/', include('redirector.urls_v1')),
-    path('<str:unique_key>/', OriginalUrlView.as_view()),
+    path('<str:unique_key>', OriginalUrlView.as_view()),
 
 ]
