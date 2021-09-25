@@ -14,3 +14,4 @@ sqlparse==0.4.2
 typing-extensions==3.10.0.2
 web-pdb==1.5.6
 mysqlclient
+python3-memcached

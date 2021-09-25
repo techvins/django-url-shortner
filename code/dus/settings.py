@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = os.environ['DOMAIN_NAME'].split(',')
 
@@ -77,6 +77,13 @@ BASE_URL =os.environ['BASE_URL']
 
 APPEND_SLASH=False
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': 'memcached:11211'
+    }
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -122,9 +129,11 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = True 
 
 USE_TZ = True
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 
 # Static files (CSS, JavaScript, Images)
