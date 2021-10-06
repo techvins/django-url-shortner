@@ -1,0 +1,49 @@
+version: '3.2'
+
+services:
+    dus_django:
+      build: ..
+      stdin_open: true
+      tty: true
+      ports:
+        - "8000:8000"
+        - "5678:5678"
+      working_dir: /app
+      command: python3 manage.py runserver 0.0.0.0:8000
+      volumes:
+        - ..:/app
+      environment:
+        - "PYTHONUNBUFFERED=1"
+      expose:
+        - "8000"
+      depends_on:
+        - mariadb
+      env_file: .env
+        
+      
+
+    mariadb:
+      image: mariadb:10.2
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: dus
+        MYSQL_USER: dus
+        MYSQL_HOST: localhost
+        MYSQL_PASSWORD: dus
+      volumes:
+       - techvins_url_shortner_mariadb:/var/lib/mysql
+
+    memcached:
+      image: memcached
+      ports:
+        - "11211:11211"
+      entrypoint:
+        - memcached
+        - -m 64
+
+
+volumes:
+  techvins_url_shortner_mariadb:
+    external: true
+
+  
