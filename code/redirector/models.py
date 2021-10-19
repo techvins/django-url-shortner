@@ -14,10 +14,12 @@ class URLRedirect(models.Model):
     created_by = models.ForeignKey(User,null=True,on_delete=models.CASCADE) 
     
     @classmethod
-    def hit(cls,unique_key):
+    def hit(cls,unique_key,info):
         obj = URLRedirect.objects.get(short_url=unique_key)
+        URLRedirectInfo.objects.create(url_redirect=obj,user_agent=info['user_agent'],user_ip_address=info['user_ip_address'],http_referer=info['http_referer'])
         obj.hit_count += 1
         obj.save()
+        
         
     @classmethod
     def add_in_cache(cls,key,value,time_period=48*60*60):
@@ -51,3 +53,14 @@ class URLRedirect(models.Model):
         urlr=URLRedirect(url=url)
         urlr.short_url=cls.get_unique_key()
         urlr.save()
+
+
+class URLRedirectInfo(models.Model):
+    visited_at = models.DateTimeField(auto_now_add=True)
+    url_redirect = models.ForeignKey(URLRedirect,on_delete=models.CASCADE)
+    user_ip_address=models.CharField(max_length=255,blank=True,null=True)
+    http_referer = models.CharField(max_length=255,blank=True,null=True)
+    user_agent = models.CharField(max_length=255,blank=True,null=True)
+
+
+    
