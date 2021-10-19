@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.crypto import get_random_string
 from django.contrib.auth.models import User
 from pymemcache.client import base
+from django.core.cache import cache
+
 # Create your models here.
 
 class URLRedirect(models.Model):
@@ -17,6 +19,13 @@ class URLRedirect(models.Model):
         obj.hit_count += 1
         obj.save()
         
+    @classmethod
+    def add_in_cache(cls,key,value,time_period=48*60*60):
+        cache.set(key,value,time_period)
+    
+    @classmethod
+    def get_from_cache(cls,key):
+        return cache.get(key)
     
 
     def save(self, *args, **kwargs):

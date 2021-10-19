@@ -9,7 +9,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect
 from pymemcache.client import base
-from django.core.cache import cache
 
 class CreateRedirectorView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -33,7 +32,7 @@ class CreateRedirectorView(generics.CreateAPIView):
         headers = self.get_success_headers(serializer.data)
         result= serializer.data
         result['created']='true'
-        cache.set(result['short_url'],url,48*60*60)
+        URLRedirect.add_in_cache(result['short_url'],url)
         result['short_url']="{}/{}".format(base_url,result['short_url'])
         return Response(result, status=status.HTTP_201_CREATED, headers=headers)
 
@@ -43,12 +42,13 @@ class OriginalUrlView(APIView):
 
     def get(self, request,unique_key):
         if unique_key:
-            if cache.get(unique_key):
-                redirect_url = cache.get(unique_key)
+            if URLRedirect.get_from_cache(unique_key):
+                print('returing from cache')
+                redirect_url = URLRedirect.get_from_cache(unique_key)
             else:
                 url_redirect_obj=get_object_or_404(URLRedirect,short_url=unique_key)
                 redirect_url = url_redirect_obj.url
-                cache.set(unique_key,redirect_url)
+                URLRedirect.add_in_cache(unique_key,redirect_url)
             URLRedirect.hit(unique_key)
             return HttpResponseRedirect(redirect_to=redirect_url)
         return Response({'message':'please enter short url'},status=status.HTTP_400_BAD_REQUEST)
