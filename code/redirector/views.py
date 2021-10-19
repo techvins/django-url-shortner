@@ -21,11 +21,12 @@ class CreateRedirectorView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         base_url=settings.BASE_URL
-        url=request.data['url']
+        url=request.data.get('url')
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=False)
+        if not serializer.is_valid(raise_exception=False):
+            return Response(serializer.errors.values(),status=status.HTTP_401_UNAUTHORIZED)
         url_redirect=URLRedirect.objects.filter(url=url)
-        if url_redirect.exists():
+        if url_redirect.exists() and not request.data.get('short_url'):
             short_url=url_redirect.last().short_url
             return Response({'url':url,'short_url':"{}/{}".format(base_url,short_url),'created':'false'}, status=status.HTTP_202_ACCEPTED)
         self.perform_create(serializer)

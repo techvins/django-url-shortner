@@ -8,7 +8,7 @@ from django.core.cache import cache
 
 class URLRedirect(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    url=models.CharField(max_length=255,unique=True)
+    url=models.CharField(max_length=255)
     short_url=models.CharField(max_length=255,db_index=True)
     hit_count=models.IntegerField(default=0)
     created_by = models.ForeignKey(User,null=True,on_delete=models.CASCADE) 
