@@ -41,6 +41,10 @@ services:
         - memcached
         - -m 64
 
+    redis:
+      image: "redis:alpine3.13"
+      ports:
+        - "6379"
 
 volumes:
   techvins_url_shortner_mariadb:
