@@ -77,23 +77,13 @@ BASE_URL =os.environ['BASE_URL']
 
 APPEND_SLASH=False
 
-if os.environ['CACHE_BACKEND_TYPE'] == 'memcached':
+if os.environ['CACHE_BACKEND'] and os.environ['CACHE_LOCATION']:
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-            'LOCATION': 'memcached:11211'
+            'BACKEND': os.environ['CACHE_BACKEND'],
+            'LOCATION': os.environ['CACHE_LOCATION']
         }
     }
-    
-if os.environ['CACHE_BACKEND_TYPE'] == 'redis':
-
-    CACHES = {
-         'default': {
-            'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': 'redis://redis:6379/',
-            }
-    }
-
 
 
 # Database
