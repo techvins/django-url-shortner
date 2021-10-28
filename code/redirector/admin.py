@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import URLRedirect, URLRedirectInfo
+from .models import URLRedirect,  URLRedirectHitInfo
+
+
+
 # Register your models here.
 
 
@@ -15,7 +18,7 @@ class URLRedirectAdmin(admin.ModelAdmin):
     list_display_links=['id','short_url']
 
 
-class URLRedirectInfoAdmin(admin.ModelAdmin):
+class  URLRedirectHitInfoAdmin(admin.ModelAdmin):
     readonly_fields = ('visited_at','id')
     fields = ['visited_at','id','url_redirect','user_ip_address','http_referer','user_agent']
     date_hierarchy = 'visited_at'
@@ -27,5 +30,5 @@ class URLRedirectInfoAdmin(admin.ModelAdmin):
     list_display_links=['id']
 
 admin.site.register(URLRedirect,URLRedirectAdmin)
-admin.site.register(URLRedirectInfo,URLRedirectInfoAdmin)
+admin.site.register( URLRedirectHitInfo,URLRedirectHitInfoAdmin)
 

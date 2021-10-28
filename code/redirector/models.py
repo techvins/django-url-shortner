@@ -16,7 +16,7 @@ class URLRedirect(models.Model):
     @classmethod
     def hit(cls,unique_key,data):
         obj = URLRedirect.objects.get(short_url=unique_key)
-        URLRedirectInfo.objects.create(url_redirect=obj,**data)
+        URLRedirectHitInfo.objects.create(url_redirect=obj,**data)
         obj.hit_count += 1
         obj.save()
         
@@ -55,7 +55,7 @@ class URLRedirect(models.Model):
         urlr.save()
 
 
-class URLRedirectInfo(models.Model):
+class  URLRedirectHitInfo(models.Model):
     visited_at = models.DateTimeField(auto_now_add=True)
     url_redirect = models.ForeignKey(URLRedirect,on_delete=models.CASCADE)
     user_ip_address=models.CharField(max_length=255,blank=True,null=True)
