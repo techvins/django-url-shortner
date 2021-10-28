@@ -20,9 +20,9 @@ class URLRedirectAdmin(admin.ModelAdmin):
 
 class  URLRedirectHitInfoAdmin(admin.ModelAdmin):
     readonly_fields = ('visited_at','id')
-    fields = ['visited_at','id','url_redirect','user_ip_address','http_referer','user_agent']
+    fields = ['visited_at','id','url_redirect','user_ip_address']
     date_hierarchy = 'visited_at'
-    list_display = ['id','url_redirect','user_ip_address','http_referer','user_agent']
+    list_display = ['id','url_redirect','user_ip_address']
     sortable_by=['id','url_redirect','visited_at']
     ordering = ['id']
     list_filter = ['visited_at']
