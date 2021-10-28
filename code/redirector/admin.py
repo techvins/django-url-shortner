@@ -7,7 +7,7 @@ from .models import URLRedirect,  URLRedirectHitInfo
 
 
 class URLRedirectAdmin(admin.ModelAdmin):
-    readonly_fields = ('created_at','id','created_by')
+    readonly_fields = ('created_at','id','created_by','hit_count')
     fields = ['created_at','id','created_by','short_url','url','hit_count']
     date_hierarchy = 'created_at'
     list_display = ['id', 'short_url','url','hit_count','created_by']
@@ -27,7 +27,7 @@ class  URLRedirectHitInfoAdmin(admin.ModelAdmin):
     ordering = ['id']
     list_filter = ['visited_at']
     search_fields=['url_redirect']
-    list_display_links=['id']
+    list_display_links=['id','url_redirect']
 
 admin.site.register(URLRedirect,URLRedirectAdmin)
 admin.site.register( URLRedirectHitInfo,URLRedirectHitInfoAdmin)
