@@ -13,6 +13,9 @@ class URLRedirect(models.Model):
     hit_count=models.IntegerField(default=0)
     created_by = models.ForeignKey(User,null=True,on_delete=models.CASCADE) 
     
+    def __str__(self):
+        return "{}".format(self.short_url)
+        
     @classmethod
     def hit(cls,unique_key,data):
         obj = URLRedirect.objects.get(short_url=unique_key)
