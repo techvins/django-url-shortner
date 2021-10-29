@@ -19,7 +19,7 @@ class URLRedirect(models.Model):
     @classmethod
     def hit(cls,unique_key,data):
         obj = URLRedirect.objects.get(short_url=unique_key)
-        URLRedirectHitInfo.objects.create(url_redirect=obj,**data)
+        URLRedirectHitInfo.objects.get_or_create(url_redirect=obj,**data)
         obj.hit_count += 1
         obj.save()
         
