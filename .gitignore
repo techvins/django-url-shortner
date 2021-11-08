@@ -35,7 +35,8 @@ data/
 # Python # 
 *.py[cod] 
 *$py.class 
-
+code/staticfiles
+code/static
 # Distribution / packaging 
 .Python build/ 
 develop-eggs/ 
