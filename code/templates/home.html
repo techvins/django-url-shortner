@@ -1,365 +1,43 @@
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mladen Ruzicic">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Techvins</title>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1 style="text-align: center">Django URL Shortner</h1>
 
-  </head>
+  <h2 style="text-align: center;margin-top: 82px;">Powered By <a href="https://techvins.com">Techvins</a></h2>
 
-  <body>
-      <style>
+  <h3 style="text-align: center;margin-top: 90px;">Redirecting in <span id="timer"></span> seconds </h3> 
 
-            @media (max-width: 768px) {  
-                .row-img{
-                    width: 252px!important;
-                    height: 252px!important;
-                    border-radius: 30px!important;
-                }
+</body>
 
-            }
-
-
-          @media (max-width: 544px) {  
-                h3 {font-size:13px;} /*1rem = 16px*/
-                h5 {font-size:13px;} /*1rem = 16px*/
-                h1{
-                    font-size: 14px!important;
-                }
-                .display2{
-                    font-size:calc(2.575rem + -4.1vw)!important;
-                }
-                .display1{
-                    font-size:calc(1.625rem + 1.5vw)!important;
-                }
-                .sec-display2{
-                    font-size:calc(2.575rem + -5.1vw)!important;
-                }
-                .sec-display1{
-                    font-size:calc(1.625rem + -1.5vw)!important;
-                }
-                .techvins-image{
-                    width:128px !important;
-                    height: 34px!important;
-                }
-                .normal-techvins-text{
-                    font-size: 16px!important;
-                }
-                .learn-more-btn{
-                    width: 133px !important;
-                    height: 36px !important;
-                }
-                .learn-more-text{
-                   font-size: 14px  !important;
-                }
-                .we-provide-text{
-                    margin-top: 40px!important;
-                }
-                .row-img{
-                    width: 127px!important;
-                    height: 100px!important;
-                    border-radius: 31px!important;
-                }
-                .big-li{
-                margin-top: 10%;
-                margin-left: 11%;
-                font-size: 35px!important;
-                }
-                .last-section{
-                    flex-direction: column-reverse!important;
-                }
-            }
+<script>
+  function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
 
 
-@media (max-width: 320px) {  
-  h3 {font-size:12px;} /*1rem = 16px*/
-  h5 {font-size:12px;} /*1rem = 16px*/
-  .display2{
-    font-size:calc(2.575rem + -6.1vw)!important;
-  }
-  .display1{
-    font-size:calc(1.625rem + -0.5vw)!important;
-  }
-  .techvins-image{
-    width:100 !important;
-    height: 34px!important;
-  }
-  .row-img{
-    width: 112px!important;
-    height: 112px!important;
-    border-radius: 20px!important;
-}
+        seconds = seconds < 10 ?  + seconds : seconds;
+
+        display.textContent = seconds;
+    
+        if (--timer < 0) {
+            window.location.href='{{redirect_url}}'
+        }
+    }, 1000);
 }
 
-@media (max-width: 280px) {  
-  h3 {font-size:11px;} /*1rem = 16px*/
-  h5 {font-size:11px;} /*1rem = 16px*/
-  .display2{
-    font-size:calc(2.575rem + -8.1vw)!important;
-  }
-  .display1{
-    font-size:calc(1.625rem + 0.5vw)!important;
-  }
-}
-.normal-techvins-text{
-    font-size: 36px;
-}
- 
-.row>* {
-    flex-shrink: inherit;
-    width: 100%;
-    max-width: 100%;
-    padding-right: calc(var(--bs-gutter-x) * .5);
-    padding-left: calc(var(--bs-gutter-x) * .5);
-    margin-top: var(--bs-gutter-y);
-}
 
-.learn-more-btn{
-    width: 300px;
-    height: 77px;
-    margin-top: 20px;
-    border-color: transparent;
-    border-radius: 20px;
-  background-color: #0974f1;
-  align-self: center;
-}
+window.onload = function () {
+    var fiveseconds = 5,
+        display = document.querySelector('#timer');
+    startTimer(fiveseconds, display);
+};
 
-.learn-more-text{
- 
-  font-size: 29px;
-  font-weight: bold;
-  
-  color: #fff;
-
-}
-.we-provide-text{
-                    margin-top: 160px;
-                }
-
-
-    .row-img{
-        width: 332px;
-    height: 302px;
-    border-radius: 30px;
-    }
-
-    .big-li{
-        margin-top: 10%;
-    margin-left: 11%;
-    font-size: 58px;
-    }
-      </style>
-  
-    
-    <nav style="background-color: #fee734;" class="navbar ">
-      <div style="flex-wrap: nowrap;    line-height: 2px;" class="container-fluid">
-        <h3 style="flex-wrap: nowrap;" >Gurugram, India</h3>
-        <h5 >Office Hours : 09:00am - 06:00pm</h5>
-      </div>
-    </nav>
-   
-
-    <div class="container-fluid mt-5 mb-5" style="padding-left: 25px;">
-      
-        <!--  image left  -->
-        <div style="justify-content: center;flex-wrap: nowrap;flex-direction: row-reverse;" class="row">
-          <div class="col-md-6 ">
-      
-            <img  src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Imac_alu.png" alt="" class="img-fluid" />
-          </div>
-          <!-- /.col-md-6 -->
-          <div style="flex-shrink: inherit;" class="col-md-6 ">
-            <img style=" width:285px; height:86px " src="https://techvins.com/wp-content/uploads/2021/07/techvins-only-logo-1.svg" data-src="https://techvins.com/wp-content/uploads/2021/07/techvins-only-logo-1.svg" class="attachment-full size-full lazyloaded techvins-image" alt="">
-            <div  class="row align-items-center h-100">
-              <div style="display:flex;flex-direction: column;" class="col">
-                <h1 style="  color: #000; font-weight:normal;   font-size: calc(2.575rem + 3.9vw);" class="display-2 display2">POWERED BY</h1>
-                <h1 style="color: #0974f1; font-weight: bold!important;;    font-size: calc(1.625rem + 7.5vw);" class="display-1 display1">TECHVINS</h1>
-
-                <p class="normal-techvins-text"> From idea to reality of website development
-                  <!-- <br /><br />
-                  <a href="" class="">Learn More</a> -->
-                </p>
-                <p class="normal-techvins-text">Grow your business and reach by making your way in the online world.
-                    <!-- <br /><br />
-                    <a href="" class="">Learn More</a> -->
-                  </p>
-                    <button class=" learn-more-btn"><span class="learn-more-text">LEARN MORE</span></button>
-              </div>
-            </div>
-            
-      
-          </div>
-          <!-- /.col-md-6 -->
-      
-        </div>
-        <!-- /.row -->
-    
-    </div>
-    
-
-
-<div  class="jumbotron">
-      <div class="container-fluid w-50">
-        <h1 style=" font-size: 60px;
-        font-weight: bold; text-align: center;" class="we-provide-text" >We Provide Various Kind Of Services To You.</h1>      
-      </div>
-    
-    </div>  
-        <div style="background-color: #fee734;max-width:100%;" class="container">
-            <div style="display: flex; flex-direction: row;flex-wrap: nowrap;justify-content: space-evenly;" class="row "> 
-                <img src="https://www.w3schools.com/w3images/underwater.jpg"  class="img-fluid mt-4 mb-4 row-img">
-                
-                <img src="https://www.w3schools.com/w3images/underwater.jpg"  class="img-fluid mt-4 mb-4 row-img">
-             
-                <img src="https://www.w3schools.com/w3images/underwater.jpg"  class="img-fluid mt-4 mb-4 row-img">
-
-            </div>
-            
-            </div>
-
-    <div class="jumbotron">
-
-       
-            <ul >
-              <li class="big-li"></li>
-              <li class="big-li"></li>
-              <li class="big-li"></li>
-            </ul>
-    
-    </div>
-
-    
-
-
-<div style=" background: linear-gradient(180deg, rgba(207,227,247,1) 30%,white 60%, rgb(247, 199, 199) 120%);padding-left: 25px;" class="container-fluid">
-    
-
- <div  class="col-md-6 pt-5">
-    <div  class="row align-items-center ">
-      <div style="display:flex;flex-direction: column;" class="col">
-        <h1 style="  color: #000; font-weight:bold;   font-size: calc(2.575rem + 1.9vw);" class="display-2 sec-display2">Few Reasons Why</h1>
-        <h1 style="color: #0974f1; font-weight: bold!important;;    font-size: calc(2.625rem + 1.5vw);" class="display-1 sec-display1">You Should Choose Us</h1>
-      </div>
-    </div>
-    
-
-  </div>
-
-  <div class="container-fluid mt-5 ">
-      
-    <!--  image left  -->
-    <div style="flex-wrap: nowrap;display: flex;justify-content: space-around;align-items: stretch;" class="mt-4 mb-4">
-      <div class="">
-        <img style="width: 95px;" src="https://www.svgrepo.com/show/18817/target.svg" alt=""  />
-      </div>
-      <!-- /.col-md-6 -->
-      <div style="flex-shrink: inherit;width: 70%;" class="col-md-6 ">
-       
-        <div  class="row align-items-center h-100">
-          <div style="display:flex;flex-direction: column;" class="col">
-            <h1 style="  color: #000; font-weight:normal;   font-size: calc(2.575rem + 0.9vw);" class="display-2 display2">New Digital Experience</h1>
-
-            <p style="    text-align: left;" class="normal-techvins-text"> Dedicated Business Solution:. Techvins experienced designer starts with the best practices of Industry-standard architecture and carter it according to the needs of the clients. We make the development part look Hassell-free and effortless.
-            </p>
-          </div>
-        </div>
-        
-  
-      </div>
-      <!-- /.col-md-6 -->
-  
-    </div>
-    <!-- /.row -->
-    <div style="flex-wrap: nowrap;display: flex;justify-content: space-around;align-items: stretch;" class="mt-4 mb-4">
-        <div class="">
-          <img style="width: 95px;" src="https://www.svgrepo.com/show/18817/target.svg" alt=""  />
-        </div>
-        <!-- /.col-md-6 -->
-        <div style="flex-shrink: inherit;width: 70%;" class="col-md-6 ">
-         
-          <div  class="row align-items-center h-100">
-            <div style="display:flex;flex-direction: column;" class="col">
-              <h1 style="  color: #000; font-weight:normal;   font-size: calc(2.575rem + 0.9vw);" class="display-2 display2">New Digital Experience</h1>
-  
-              <p style="text-align: left;" class="normal-techvins-text"> Dedicated Business Solution:. Techvins experienced designer starts with the best practices of Industry-standard architecture and carter it according to the needs of the clients. We make the development part look Hassell-free and effortless.
-              </p>
-            </div>
-          </div>
-          
-    
-        </div>
-        <!-- /.col-md-6 -->
-    
-      </div>
-      <!-- /.row -->
-
-      <div  class="col-md-6 mb-4 ">
-        <div  class="row align-items-center ">
-          <div style="display:flex;flex-direction: column;" class="col">
-            <h1 style="  color: #000; font-weight:bold;   font-size: calc(2.575rem + 1.9vw);" class="display-2 sec-display2">What Our Clients</h1>
-            <h1 style="color: #0974f1; font-weight: bold!important;;    font-size: calc(2.625rem + 1.5vw);" class="display-1 sec-display1">Say About Our Agency</h1>
-          </div>
-        </div>
-        
-    
-      </div>
-
-      <div style="flex-wrap: nowrap;display: flex;justify-content: space-between;align-items: stretch;flex-direction: row-reverse;" class="last-section">
-        <div class="">
-          <img style="width: 100%;" src="https://www.svgrepo.com/show/18817/target.svg" alt=""  />
-        </div>
-        <!-- /.col-md-6 -->
-        <div style="flex-shrink: inherit;" class="col-md-6 mb-4">
-         
-          <div  class="row align-items-center h-100">
-  
-              <p class="normal-techvins-text"> “Well done team Techvins, it was great to work with you, Techvins development team helped me in making my bold idea come into reality, they acknowledged my requirements and delivered the results ahead of time."
-              </p>
-            
-          </div>
-          
-    
-        </div>
-        <!-- /.col-md-6 -->
-    
-      </div>
-
-</div>
-
-
-</div>
-
-<div style="padding-left: 83px;" class="board"><span class="">
-  
- 
-</div>
-
-
-</div>
-  
-
-
-
-    
-    <footer style="flex-wrap: nowrap; background-color: #fee734; bottom: 0; " class="container-fluid footer navbar">
-        <h3 style="flex-wrap: nowrap;" >Email: hello@techvins.com</h3>
-        <h5 >Phone no.: 8209001526</h5>
-    </footer>
-    
-    
-
-
-
-
-
-
-
-
-
-
-  </body>
+</script>
 </html>
-
