@@ -78,7 +78,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'dus.wsgi.application'
 
 BASE_URL =os.environ['BASE_URL']
-
+PRIMARY_DOMAIN_URL =os.environ['PRIMARY_DOMAIN_URL']
 APPEND_SLASH=False
 
 if os.environ['CACHE_BACKEND'] and os.environ['CACHE_LOCATION']:
