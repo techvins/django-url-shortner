@@ -22,8 +22,8 @@ class URLRedirectAdmin(admin.ModelAdmin):
         return truncatechars(obj.url, 25)
 
 class  URLRedirectHitInfoAdmin(admin.ModelAdmin):
-    readonly_fields = ('visited_at','id')
-    fields = ['visited_at','id','url_redirect','user_ip_address']
+    readonly_fields = ('visited_at','id','user_ip_address','user_agent','http_referer')
+    fields = ['visited_at','id','url_redirect','user_ip_address','user_agent','http_referer']
     date_hierarchy = 'visited_at'
     list_display = ['id','url_redirect','user_ip_address','hit_count']
     sortable_by=['id','url_redirect','visited_at']
