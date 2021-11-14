@@ -17,7 +17,7 @@
 <script>
   function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
-    setInterval(function () {
+    var refresh=setInterval(function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
 
@@ -27,6 +27,7 @@
         display.textContent = seconds;
     
         if (--timer < 0) {
+          clearInterval(refresh);
             window.location.href='{{redirect_url}}'
         }
     }, 1000);
