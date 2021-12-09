@@ -28,7 +28,7 @@ class CreateRedirectorView(generics.CreateAPIView):
         url_redirect=URLRedirect.objects.filter(url=url)
         if url_redirect.exists() and not request.data.get('short_url'):
             short_url=url_redirect.last().short_url
-            return Response({'url':url,'short_url':"{}/{}".format(base_url,short_url),'created':'false'}, status=status.HTTP_202_ACCEPTED)
+            return Response({'url':url,'short_url':"{}{}".format(base_url,short_url),'created':'false'}, status=status.HTTP_202_ACCEPTED)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         result= serializer.data
