@@ -41,6 +41,14 @@ class CreateRedirectorView(generics.CreateAPIView):
 class OriginalUrlView(APIView):
     permission_classes = [permissions.AllowAny]
 
+    def get_client_ip(self,request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+
     def get(self, request,unique_key):
         if unique_key:
             if URLRedirect.get_from_cache(unique_key):
@@ -49,7 +57,7 @@ class OriginalUrlView(APIView):
                 url_redirect_obj=get_object_or_404(URLRedirect,short_url=unique_key)
                 redirect_url = url_redirect_obj.url
                 URLRedirect.add_in_cache(unique_key,redirect_url)
-            info = { 'user_ip_address':request.META.get("REMOTE_ADDR"),'user_agent':request.META.get('HTTP_USER_AGENT'),'http_referer':request.META.get('HTTP_REFERER')}
+            info = { 'user_ip_address':self.get_client_ip(request),'user_agent':request.META.get('HTTP_USER_AGENT'),'http_referer':request.META.get('HTTP_REFERER')}
             URLRedirect.hit(unique_key,info)
             return HttpResponseRedirect(redirect_to=redirect_url)
         return Response({'message':'please enter short url'},status=status.HTTP_400_BAD_REQUEST)
