@@ -34,7 +34,7 @@ class CreateRedirectorView(generics.CreateAPIView):
         result= serializer.data
         result['created']='true'
         URLRedirect.add_in_cache(result['short_url'],url)
-        result['short_url']="{}/{}".format(base_url,result['short_url'])
+        result['short_url']="{}{}".format(base_url,result['short_url'])
         return Response(result, status=status.HTTP_201_CREATED, headers=headers)
 
 

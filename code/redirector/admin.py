@@ -25,15 +25,13 @@ class  URLRedirectHitInfoAdmin(admin.ModelAdmin):
     readonly_fields = ('visited_at','id','user_ip_address','user_agent','http_referer')
     fields = ['visited_at','id','url_redirect','user_ip_address','user_agent','http_referer']
     date_hierarchy = 'visited_at'
-    list_display = ['id','url_redirect','user_ip_address','hit_count']
+    list_display = ['id','url_redirect','user_ip_address']
     sortable_by=['id','url_redirect','visited_at']
     ordering = ['id']
     list_filter = ['visited_at']
     search_fields=['url_redirect__url','url_redirect__short_url']
     list_display_links=['id','url_redirect']
     
-    def hit_count(self, obj):
-        return obj.url_redirect.hit_count
 
 admin.site.register(URLRedirect,URLRedirectAdmin)
 admin.site.register( URLRedirectHitInfo,URLRedirectHitInfoAdmin)
